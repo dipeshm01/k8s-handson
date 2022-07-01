@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginxdeploy2
+  name: nginxdeploy2
+  namespace: mynamespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginxdeploy2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginxdeploy2
+    spec:
+      containers:
+      - image: nginx
+        envFrom:
+        - configMapRef:
+            name: anotherone
+        name: nginx
+        ports:
+          - containerPort: 80
+        resources: {}
+status: {}

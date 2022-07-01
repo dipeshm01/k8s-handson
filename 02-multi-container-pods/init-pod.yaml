@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+  namespace: mynamespace
+spec:
+  volumes:
+    - name: vol
+      emptyDir: {}
+  initContainers:
+    - name: busybox
+      image: busybox
+      volumeMounts:
+        - mountPath: /work-dir
+          name: vol
+      args:
+        - /bin/sh
+        - -c
+        - wget -O /work-dir/index.html http://neverssl.com/online
+  containers:
+    - image: nginx
+      name: nginx
+      volumeMounts:
+      - name: vol
+        mountPath: /usr/share/nginx/html
+      ports:
+        - containerPort: 80

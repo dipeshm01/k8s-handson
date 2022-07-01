@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginxdep
+  name: nginxdep
+  namespace: mynamespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginxdep
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginxdep
+    spec:
+      containers:
+        - image: nginx
+          env:
+          - name: option
+            valueFrom:
+              configMapKeyRef:
+                key: var5
+                name: options
+          name: nginx
+          ports:
+            - containerPort: 80
